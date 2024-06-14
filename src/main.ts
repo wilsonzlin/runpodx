@@ -64,7 +64,7 @@ const listTemplates = async () => {
 
 const cli = Command.new("runpod");
 
-cli.subcommand("list-templates", "List personal templates").action(async () => {
+cli.subcommand("list-templates", "List templates").action(async () => {
   console.log(await listTemplates());
 });
 
