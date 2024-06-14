@@ -99,8 +99,8 @@ cli
     description:
       "Path to a file containing additional one environment variable per line (blanks and # ignored) to set in the pod",
   })
-  .boolean("secure-cloud", {
-    description: "Use the secure cloud (if omitted, community cloud is used)",
+  .boolean("community", {
+    description: "Use the community cloud (if omitted, secure cloud is used by default)",
   })
   .action(async (args) => {
     const templateId = await listTemplates().then(
@@ -131,7 +131,7 @@ cli
               mutation {
                 podFindAndDeployOnDemand(
                   input: {
-                    cloudType: ${args["secure-cloud"] ? "SECURE" : "COMMUNITY"}
+                    cloudType: ${args.community ? "COMMUNITY" : "SECURE"}
                     containerDiskInGb: 0
                     dockerArgs: ""
                     env: ${JSON.stringify(env)}
