@@ -64,7 +64,7 @@ const listTemplates = async () => {
 
 const cli = Command.new("runpod");
 
-cli.subcommand("list-templates").action(async () => {
+cli.subcommand("list-templates", "List personal templates").action(async () => {
   console.log(await listTemplates());
 });
 
@@ -75,7 +75,7 @@ const readLines = (file: string) =>
     .filter((l) => l && !l.startsWith("#"));
 
 cli
-  .subcommand("launch")
+  .subcommand("launch", "Launch pods")
   .required("template", String, {
     description: "Name of the template to launch",
   })
@@ -91,16 +91,16 @@ cli
       "GPUs type to use, separated by comma, in order of preference; must be provided if `gpufile` is not",
   })
   .repeated("env", String, {
-    alias: "e",
     description:
       "Additional environment variable to set in the pod, in the form NAME=value, overriding any set via `envfile` if provided",
   })
   .optional("envfile", String, {
     description:
-      "Path to a file containing additional one environment variable per line (blanks and # ignored) to set in the pod",
+      "Path to a file containing one additional environment variable per line (blanks and # ignored) to set in the pod",
   })
   .boolean("community", {
-    description: "Use the community cloud (if omitted, secure cloud is used by default)",
+    description:
+      "Use the community cloud (if omitted, secure cloud is used by default)",
   })
   .action(async (args) => {
     const templateId = await listTemplates().then(
@@ -157,7 +157,7 @@ cli
     );
   });
 
-cli.subcommand("terminate").action(async () => {
+cli.subcommand("terminate", "Terminate pods").action(async () => {
   const raw = await req(
     `
       query myself {
