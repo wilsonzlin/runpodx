@@ -110,12 +110,12 @@ cli
       throw new Error(`Template not found: ${args.template}`);
     }
     const q = new Semaphore(100);
-    const env = {
+    const env = Object.entries({
       ...(args.envfile
         ? readLines(args.envfile).map((e) => splitString(e, "=", 2))
         : []),
       ...Object.fromEntries(args.env.map((e) => splitString(e, "=", 2))),
-    };
+    }).map(([key, value]) => ({ key, value }));
     const gpus = args.gpufile
       ? readLines(args.gpufile)
       : args
