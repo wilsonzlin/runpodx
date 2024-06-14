@@ -90,6 +90,9 @@ cli
     description:
       "GPUs type to use, separated by comma, in order of preference; must be provided if `gpufile` is not",
   })
+  .optional("datacenter", String, {
+    description: "ID of a specific datacenter to launch in"
+  })
   .repeated("env", String, {
     description:
       "Additional environment variable to set in the pod, in the form NAME=value, overriding any set via `envfile` if provided",
@@ -133,6 +136,7 @@ cli
                   input: {
                     cloudType: ${args.community ? "COMMUNITY" : "SECURE"}
                     containerDiskInGb: 0
+                    ${!args.datacenter ? "" : `dataCenterId: "${args.datacenter}"`}
                     dockerArgs: ""
                     env: ${JSON.stringify(env)}
                     gpuCount: 1
